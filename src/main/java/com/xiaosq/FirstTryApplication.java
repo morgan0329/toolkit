@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 /**
  *  * @RestController 等同于 （@Controller 与 @ResponseBody）
  */
+@EnableAuthorizationServer
 @SpringBootApplication
 public class FirstTryApplication {
 
