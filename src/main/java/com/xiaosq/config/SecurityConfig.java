@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().authorizeRequests()
 				.antMatchers("/home", "/register", "/socket", "/index/**").permitAll()//首页、注册、web socket，不需要权限
 				.antMatchers("/static/**", "/ueditor/**", "/error/**").permitAll()
-				.antMatchers("/oauth/**", "/api/**").permitAll()//当前filter不拦截 OAuth2.0 的路径
+				.antMatchers("/oauth/**", "/api/**").fullyAuthenticated()//当前filter不拦截 OAuth2.0 的路径
 				.anyRequest().authenticated()
 				.antMatchers("/admin/**").hasRole("admin")//预留管理员权限
 			.and().formLogin().defaultSuccessUrl("/home").permitAll()

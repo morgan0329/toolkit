@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -12,10 +13,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -34,6 +40,17 @@ public class ServerConfig extends AuthorizationServerConfigurerAdapter {
 	@Autowired
     @Qualifier("qiYunClientService")
 	private ClientDetailsService clientService;
+
+    @Autowired
+    private TokenEndpoint tokenEndpoint;
+
+    @PostConstruct
+    public void reconfigure() {
+        Set<HttpMethod> allowedMethods =
+                new HashSet<>(Arrays.asList(HttpMethod.GET, HttpMethod.POST));
+        tokenEndpoint.setAllowedRequestMethods(allowedMethods);
+    }
+
 	
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {

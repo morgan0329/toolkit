@@ -163,7 +163,7 @@ public class Client implements ClientDetails{
 
 	@Override
 	public Map<String, Object> getAdditionalInformation() {
-		Map<String, Object> info = new HashMap<String, Object>();
+		Map<String, Object> info = new HashMap<>();
 		info.put("info", this.additionalInfo);
 		return info;
 	}
